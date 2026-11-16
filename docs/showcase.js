@@ -275,16 +275,41 @@
   }
   function renderDecisions(b) {
     const phase = { before: "Before", during: "During", after: "After" };
-    fill($("#b-decisions"), ...(b.decision_points || []).map((dp) => h("li", { class: "dp" },
-      h("p", { class: "text-xs font-semibold uppercase tracking-[0.12em] text-signal" }, phase[dp.phase] || dp.phase),
-      h("p", { class: "mt-1 text-sm text-ink-soft" }, dp.trigger),
-      h("p", { class: "mt-2 font-medium leading-snug" }, dp.decision),
-      h("p", { class: "mt-2 text-sm" }, h("strong", {}, "Owner: "), (dp.owner && dp.owner.who) || "to confirm", " ", h("span", { class: "basis" }, (dp.owner && dp.owner.basis) || "")),
-      (dp.lines || []).length ? h("p", { class: "mt-2 text-xs text-ink-soft" }, (() => {
-        const c = { answered: 0, partial: 0, unknown: 0 }; dp.lines.forEach((x) => (c[x.status] = (c[x.status] || 0) + 1));
-        return `Needs ${dp.lines.length} brief answers: ${c.answered} answered, ${c.partial} with a limit, ${c.unknown} phone calls.`;
-      })()) : null,
-    )));
+    const hint = { before: "Get ready", during: "Respond", after: "Recover" };
+    const card = (dp) => {
+      const basis = (dp.owner && dp.owner.basis) || "";
+      const c = { answered: 0, partial: 0, unknown: 0 };
+      (dp.lines || []).forEach((x) => (c[x.status] = (c[x.status] || 0) + 1));
+      const n = (dp.lines || []).length;
+      const seg = (k) => (c[k] ? h("span", { class: `seg st-${k}`, style: `flex:${c[k]}` }) : null);
+      return h("li", { class: "dp" },
+        h("p", { class: "dp-when" }, h("span", { class: "dp-when-k" }, "When"), dp.trigger),
+        h("p", { class: "dp-q" }, dp.decision),
+        h("div", { class: "dp-foot" },
+          h("p", { class: "dp-owner" }, h("span", { class: "dp-owner-k" }, "Owner"), (dp.owner && dp.owner.who) || "to confirm"),
+          basis ? h("span", { class: `dp-basis ${/team/i.test(basis) ? "is-proposal" : ""}` }, basis) : null,
+          n ? h("div", { class: "dp-status" },
+            h("div", { class: "dp-bar", role: "img", "aria-label": `${c.answered} of ${n} answered, ${c.partial} with a limit, ${c.unknown} need a call` }, seg("answered"), seg("partial"), seg("unknown")),
+            h("p", { class: "dp-count" }, h("strong", {}, `${c.answered} of ${n}`), " answered",
+              c.partial ? ` · ${c.partial} with a limit` : "", c.unknown ? ` · ${c.unknown} need a call` : ""),
+          ) : null,
+        ),
+      );
+    };
+    const dps = b.decision_points || [];
+    const keys = Object.keys(phase).concat([...new Set(dps.map((d) => d.phase))].filter((k) => !(k in phase)));
+    fill($("#b-decisions"), ...keys.map((k, i) => {
+      const items = dps.filter((d) => d.phase === k);
+      return items.length ? h("li", { class: "dp-col" },
+        h("div", { class: "dp-head" },
+          h("span", { class: "dp-step" }, String(i + 1)),
+          h("span", { class: "dp-phase" }, phase[k] || k),
+          hint[k] ? h("span", { class: "dp-hint" }, hint[k]) : null,
+          h("span", { class: "dp-n" }, `${items.length} ${items.length === 1 ? "decision" : "decisions"}`),
+        ),
+        h("ul", { class: "dp-list" }, ...items.map(card)),
+      ) : null;
+    }));
   }
   function renderOutreach(b) {
     const o = b.outreach || {};
@@ -436,6 +461,17 @@
   // Each page has only some of these parts; run the ones whose element is on the page.
   if ($("#brief")) {
     $("#print-brief").addEventListener("click", () => window.print());
+    // Print every part of the brief, not just the open tab. CSS alone can't do this: Tailwind's base
+    // layer hides [hidden] with !important, and a layered !important beats any unlayered rule.
+    let hiddenPanels = [];
+    window.addEventListener("beforeprint", () => {
+      hiddenPanels = [...document.querySelectorAll(".tab-panel[hidden]")];
+      hiddenPanels.forEach((p) => (p.hidden = false));
+    });
+    window.addEventListener("afterprint", () => {
+      hiddenPanels.forEach((p) => (p.hidden = true));
+      hiddenPanels = [];
+    });
     window.addEventListener("hashchange", () => { readHash(); render(); });
     readHash();
     render();
