@@ -1,0 +1,537 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Plan · Label &amp; Ladder</title><meta name="description" content="Connecting what Hawaiʻi already knows about access and functional needs, before a disaster"><meta name="color-scheme" content="light"><link rel="stylesheet" href="/Space-Cat/_astro/data.B9RcduOx.css"></head><body class="min-h-screen bg-paper text-ink flex flex-col"><a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 bg-paper px-3 py-2">Skip to content</a><header class="border-b border-line"><div class="mx-auto max-w-7xl px-4 sm:px-8 py-5 flex flex-wrap items-baseline gap-x-8 gap-y-3"><a href="/Space-Cat/" class="no-underline mr-auto"><span class="font-serif text-2xl sm:text-[1.75rem] font-semibold tracking-tight text-brand">Label &amp; Ladder</span><span class="hidden md:inline ml-3 text-sm text-ink-soft">HAIC 2026</span></a><nav aria-label="Main" class="no-print"><ul class="flex flex-wrap gap-x-6 gap-y-2 text-[0.95rem] font-medium"><li><a href="/Space-Cat/" class="no-underline pb-1 border-b-2 border-transparent text-ink-soft hover:text-brand">The case</a></li><li><a href="/Space-Cat/showcase/" class="no-underline pb-1 border-b-2 border-transparent text-ink-soft hover:text-brand">Try the brief</a></li><li><a href="/Space-Cat/plan/" class="no-underline pb-1 border-b-2 border-signal text-ink" aria-current="page">Plan</a></li><li><a href="/Space-Cat/slides/" class="no-underline pb-1 border-b-2 border-transparent text-ink-soft hover:text-brand">Slides</a></li></ul></nav></div></header><main id="main" class="flex-1"><div class="mx-auto max-w-7xl px-4 sm:px-8 py-14 lg:grid lg:grid-cols-[minmax(0,1fr)_13rem] lg:gap-12"><article class="prose !max-w-none min-w-0"><h1 id="label--ladder-an-ai-developed-plan-for-esf-6-afn-planning-in-hawaiʻi">Label &amp; Ladder: an AI-developed plan for ESF-6 AFN planning in Hawaiʻi</h1>
+<p>HAIC 2026 · AI-Developed Planning and Improvement Challenge · DHS: “Enhancing ESF-6 Planning Through AI-Supported Insights”.
+Data as of 2026-11-14. Every number below is produced by the build in this repository (<code>uv run build.py</code>); the live
+versions are on the showcase page.</p>
+<blockquote>
+<p>Planning aid. Supports, does not replace, county emergency plans. Not an official shelter list.</p>
+</blockquote>
+<h2 id="1-in-one-page">1. In one page</h2>
+<p>DHS named the root issue itself: <strong>“The information exists. It just isn’t connected.”</strong> (DHS pitch, slide 5).
+Information about people with access and functional needs (AFN), hazard exposure and partner resources sits with
+many owners, in different shapes, with no shared words and no date saying when anyone last checked it.</p>
+<p>We considered three roads (section 3) and chose the third: <strong>standardize the label, not the system.</strong></p>
+<ul>
+<li><strong>Label:</strong> every data source gets the same one-page description: owner, what it covers, area level, unit, as of,
+last confirmed, how to get it, privacy level, limits, and who to ask.</li>
+<li><strong>Ladder:</strong> each sector climbs at its own pace from a phone call (level 0) to a schedule (1), a file at a stable
+address (2), and a service that answers with counts per area (3). Each rung is useful even if the next never comes.</li>
+</ul>
+<p><strong>What works today, from public data only:</strong></p>
+<ul>
+<li>432 of 432 census tracts with residents, mapped for hurricane, wildfire, tsunami and flood (DHS goal 1).</li>
+<li>Needs estimates for every county and hazard across the CMIST areas, with low / likely / high ranges, checked
+against past Hawaiʻi events (DHS goal 2).</li>
+<li>16 printable briefs, one per county and hazard, rebuilt from the sources in under a second. Of 560 brief
+questions, <strong>188 are answered from a labeled source, 240 are answered with a stated limit, and 132 still need a
+phone call</strong>, each naming who to ask and what to ask (DHS goal 3).</li>
+<li>57 labeled sources: 11 at level 0, 19 at level 1, 16 at level 2, 11 at level 3.</li>
+</ul>
+<p><strong>Our ask:</strong> one county and one timed tabletop to measure goal 3, and DHS’s answers to the questions in section 10.</p>
+<h2 id="2-the-root-issue-with-evidence">2. The root issue, with evidence</h2>
+<p>The brief describes the symptoms (pp. 3–4). Our research found six causes behind them. Each is backed by a source
+we opened and saved (<code>data/research/</code>).</p>
+<table>
+<thead>
+<tr>
+<th>Cause</th>
+<th>DHS’s words</th>
+<th>What we found</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No shared words</td>
+<td>“each County maintains its own definitions of sheltering options” (p. 3)</td>
+<td>FEMA’s ESF#6 Shelter System spells the four counties 9 ways across Hawaiʻi’s 729 records. Kauaʻi calls its sites “refuge areas … an evacuation option of last resort”; Honolulu uses four site types.</td>
+</tr>
+<tr>
+<td>No date anyone checked</td>
+<td>“Data quality varies in completeness and format” (p. 3)</td>
+<td>Neither State data catalog fills the fields that say how current a dataset is. The State’s only open shelter list says “Date Updated: June 18, 2012”.</td>
+</tr>
+<tr>
+<td>Rebuilt every event, never kept</td>
+<td>“Recompiling shelter and refuge lists … for each planning cycle and each event” (p. 4)</td>
+<td>HI-EMA posts shelters “when they are opened”. Maui County publishes no standing list. Few past events publish a shelter count at all.</td>
+</tr>
+<tr>
+<td>Shared systems with empty boxes</td>
+<td>“making sure shelters have power generation, transportation, language support …” (p. 4)</td>
+<td>Of FEMA’s 729 Hawaiʻi records, 554 say nothing about a generator and 578 nothing about wheelchair access.</td>
+</tr>
+<tr>
+<td>Records or nothing</td>
+<td>“Privacy rules limit sharing of client-level system data” (p. 3)</td>
+<td>Utilities keep medical-needs customer lists but publish no counts by area. HHS emPOWER shows the alternative: counts per ZIP, never records.</td>
+</tr>
+<tr>
+<td>Nobody holds the whole picture</td>
+<td>“Partner resources and roles are not consistently mapped” (p. 3)</td>
+<td>No state agency publishes a current statewide shelter or partner-resource roll-up.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-three-roads-and-why-we-chose-the-third">3. Three roads, and why we chose the third</h2>
+<table>
+<thead>
+<tr>
+<th>Road</th>
+<th>What it gets right</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Build another map or dashboard</strong></td>
+<td>Answers the brief’s “no single, current view” (p. 3). We draw a map too.</td>
+<td>Not enough on its own: a map is only as current as what feeds it, and copies today’s stale and blank fields into a nicer picture.</td>
+</tr>
+<tr>
+<td><strong>One shared system, or a strict standard every sector must adopt</strong></td>
+<td>One place to look.</td>
+<td>Rejected as the first step: for shelters that system already exists (FEMA ESF#6, synced daily with the Red Cross) and its key boxes are empty. A mandate also waits on the slowest sector.</td>
+</tr>
+<tr>
+<td><strong>Label what exists, then climb a ladder</strong></td>
+<td>Starts today with nothing new; each rung pays off alone; AI agents can work at every rung.</td>
+<td><strong>Chosen.</strong> Its weakness is that it needs owners to keep labels current; stage 2 below makes that a seasonal habit with a named owner.</td>
+</tr>
+</tbody>
+</table>
+<p>Further decisions, each in <code>data/argument.json</code> with its evidence:</p>
+<ul>
+<li><strong>Counts per area, never people.</strong> The brief rules out individual registries and tracking (p. 6).</li>
+<li><strong>Reuse existing standards’ field names</strong> (the State catalogs already publish DCAT-US); add only area level, last
+confirmed, privacy level and ladder level.</li>
+<li><strong>Printable briefs and a static site,</strong> because the plan must work in “high-stress, low-connectivity conditions”
+(p. 5). The site calls no outside service, so it runs from a laptop with Wi-Fi off.</li>
+<li><strong>Numbers from plain code; AI to build, research, check and draft</strong> (section 8).</li>
+<li><strong>Four hazards,</strong> as the brief’s scope and goals name; earthquake (mentioned once, p. 4) is a later addition on the
+same ladder.</li>
+</ul>
+<h2 id="4-what-the-plan-does-today-map-model-match">4. What the plan does today: Map, Model, Match</h2>
+<p><strong>Map.</strong> For every census tract: the share of residents inside each hazard zone (2020 Census blocks) and AFN
+indicators by CMIST area from the Census ACS 2020–2024 with 90% margins of error:</p>
+<table>
+<thead>
+<tr>
+<th>CMIST</th>
+<th>Indicators (tract level unless noted)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Communication</td>
+<td>limited-English households; hearing and vision difficulty; detailed languages (county level, ACS microdata)</td>
+</tr>
+<tr>
+<td>Medical</td>
+<td>electricity-dependent Medicare beneficiaries (HHS emPOWER, ZIP and county only; never split into tracts)</td>
+</tr>
+<tr>
+<td>Independence</td>
+<td>difficulty walking or climbing stairs, bathing or dressing, doing errands alone</td>
+</tr>
+<tr>
+<td>Safety and support</td>
+<td>kūpuna 65+ living alone; children under 5; difficulty remembering or deciding</td>
+</tr>
+<tr>
+<td>Transportation</td>
+<td>households without a vehicle</td>
+</tr>
+</tbody>
+</table>
+<p>Hazard zones: State tsunami evacuation zone; FEMA Special Flood Hazard Area; wildfire = within 500 m of land rated
+high or very high Wildfire Hazard Potential (USFS); hurricane = the whole island. Unsheltered Point-in-Time counts and
+average daily visitors are kept as separate county lines. Shelter sites come from each county’s own lists and event
+announcements since 2018, each with its source, and are flagged by zone.</p>
+<p><strong>Model.</strong> People likely to need a public shelter = people in the zone × a published shelter-seeking rate (low /
+likely / high; tsunami and flood rates are labeled team assumptions because no published rate exists). Needs follow
+from per-person factors in <code>data/factors.csv</code> (51 factors: 40 published with page and quote, 11 team assumptions).
+CMIST groups overlap and are never added; people and households are never added.</p>
+<p><strong>Match.</strong> Each need goes to a proposed lead and support partners (from the SESF #6 Annex, the State Emergency
+Operations Plan and the DHS brief, or marked “team proposal”), with confirmed capacity left blank and the gap
+written as “unknown: confirm with the owner”. Decision points per hazard are tied to official alerts (CPHC, NWS,
+PTWC). Resident messages are drafted for before, during and after, with formats and channels; translations are
+marked AI drafts that need native-speaker review, and Chuukese and Marshallese are routed to human translators.</p>
+<p><strong>The 16 briefs</strong> (hurricane figures are the direct-hit planning case; see section 5):</p>
+<table>
+<thead>
+<tr>
+<th>County</th>
+<th>Hazard</th>
+<th>People in zone</th>
+<th>Likely to need a public shelter (range)</th>
+<th>Answered / with a limit / phone call</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Honolulu</td>
+<td>hurricane</td>
+<td>1,001,150</td>
+<td>190,220 (60,070–370,420)</td>
+<td>18 / 8 / 9</td>
+</tr>
+<tr>
+<td>Honolulu</td>
+<td>wildfire</td>
+<td>484,210</td>
+<td>19,370 (14,530–53,260)</td>
+<td>13 / 13 / 9</td>
+</tr>
+<tr>
+<td>Honolulu</td>
+<td>tsunami</td>
+<td>86,980</td>
+<td>4,350 (1,740–10,440)</td>
+<td>7 / 19 / 9</td>
+</tr>
+<tr>
+<td>Honolulu</td>
+<td>flood</td>
+<td>96,500</td>
+<td>5,790 (2,900–11,580)</td>
+<td>7 / 19 / 9</td>
+</tr>
+<tr>
+<td>Hawaiʻi</td>
+<td>hurricane</td>
+<td>205,770</td>
+<td>39,100 (12,350–76,140)</td>
+<td>19 / 8 / 8</td>
+</tr>
+<tr>
+<td>Hawaiʻi</td>
+<td>wildfire</td>
+<td>60,560</td>
+<td>2,420 (1,820–6,660)</td>
+<td>16 / 11 / 8</td>
+</tr>
+<tr>
+<td>Hawaiʻi</td>
+<td>tsunami</td>
+<td>13,240</td>
+<td>660 (260–1,590)</td>
+<td>10 / 17 / 8</td>
+</tr>
+<tr>
+<td>Hawaiʻi</td>
+<td>flood</td>
+<td>7,180</td>
+<td>430 (220–860)</td>
+<td>10 / 17 / 8</td>
+</tr>
+<tr>
+<td>Maui</td>
+<td>hurricane</td>
+<td>164,590</td>
+<td>31,270 (9,880–60,900)</td>
+<td>16 / 11 / 8</td>
+</tr>
+<tr>
+<td>Maui</td>
+<td>wildfire</td>
+<td>45,700</td>
+<td>1,830 (1,370–5,030)</td>
+<td>12 / 15 / 8</td>
+</tr>
+<tr>
+<td>Maui</td>
+<td>tsunami</td>
+<td>25,620</td>
+<td>1,280 (510–3,070)</td>
+<td>6 / 21 / 8</td>
+</tr>
+<tr>
+<td>Maui</td>
+<td>flood</td>
+<td>10,390</td>
+<td>620 (310–1,250)</td>
+<td>6 / 21 / 8</td>
+</tr>
+<tr>
+<td>Kauaʻi</td>
+<td>hurricane</td>
+<td>73,730</td>
+<td>14,010 (4,420–27,280)</td>
+<td>18 / 9 / 8</td>
+</tr>
+<tr>
+<td>Kauaʻi</td>
+<td>wildfire</td>
+<td>35,940</td>
+<td>1,440 (1,080–3,950)</td>
+<td>12 / 15 / 8</td>
+</tr>
+<tr>
+<td>Kauaʻi</td>
+<td>tsunami</td>
+<td>11,170</td>
+<td>560 (220–1,340)</td>
+<td>9 / 18 / 8</td>
+</tr>
+<tr>
+<td>Kauaʻi</td>
+<td>flood</td>
+<td>9,050</td>
+<td>540 (270–1,090)</td>
+<td>9 / 18 / 8</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-dhss-three-measurable-goals">5. DHS’s three measurable goals</h2>
+<p><strong>Goal 1: hazard-specific AFN maps, every county, 100% of census tracts.</strong> Met: 432 of 432 tracts with residents
+for all four hazards (the 29 other tracts in the Census list are water or have no residents, and are listed). Six of the 432 had 202 residents in the 2020 Census but an
+ACS estimate of 0, so their estimates show 0. Medical
+need has no public tract source, so it is shown at ZIP and county level and says so.</p>
+<p><strong>Goal 2: needs estimates validated against past events.</strong> The same formula runs on the area each past event
+affected, without tuning. Proposed margin (for DHS to agree): the published count falls inside the model’s range.</p>
+<table>
+<thead>
+<tr>
+<th>Event</th>
+<th>County</th>
+<th>Published count</th>
+<th>Model likely (range)</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Maui wildfires, 2023-08-08</td>
+<td>Maui</td>
+<td>2,100</td>
+<td>800 (600–2,190)</td>
+<td>inside the range</td>
+</tr>
+<tr>
+<td>Central Maui brush fire, 2019-07-11</td>
+<td>Maui</td>
+<td>479</td>
+<td>120 (89–330)</td>
+<td>published 4.0× higher</td>
+</tr>
+<tr>
+<td>Tsunami warning, 2025-07-29</td>
+<td>Hawaiʻi</td>
+<td>1,500</td>
+<td>660 (260–1,590)</td>
+<td>inside the range</td>
+</tr>
+<tr>
+<td>Tsunami warning, 2025-07-29</td>
+<td>Kauaʻi</td>
+<td>1,800</td>
+<td>560 (220–1,340)</td>
+<td>published 3.2× higher</td>
+</tr>
+<tr>
+<td>Kona low storm, 2026-03-20</td>
+<td>Honolulu</td>
+<td>131</td>
+<td>240 (120–480)</td>
+<td>inside the range</td>
+</tr>
+<tr>
+<td>Hurricane Lane, 2018-08-23</td>
+<td>Honolulu</td>
+<td>1,114</td>
+<td>190,220 (60,070–370,420)</td>
+<td>model 171× higher</td>
+</tr>
+<tr>
+<td>Hurricane Lala, 2026-08-16</td>
+<td>Honolulu</td>
+<td>247</td>
+<td>190,220 (60,070–370,420)</td>
+<td>model 770× higher</td>
+</tr>
+<tr>
+<td>Hurricane Lowell, 2026-09-08</td>
+<td>Kauaʻi</td>
+<td>301</td>
+<td>14,010 (4,420–27,280)</td>
+<td>model 47× higher</td>
+</tr>
+</tbody>
+</table>
+<p>The full table (13 main rows, plus secondary rows) is on the showcase page. <strong>Honest reading:</strong> wildfire and tsunami
+turnouts land in the range or above it, so the high end is the safer planning figure. The hurricane rate is the
+Hawaiʻi Hurricane Behavioral Study’s planning rate for a direct hit; every hurricane in the main rows was a near
+miss, so the model is far above those nights. The one direct hit on record, ʻIniki on Kauaʻi in 1992, had about 7,000
+people in shelters two days later, inside the model’s range (a secondary row: the source is a newspaper count). Use it
+to size what a direct hit would take, not to staff a near miss. Few events publish a count at all, which is itself one of the gaps this plan names.</p>
+<p><strong>Goal 3: time to a coordinated needs-and-resources plan.</strong> The brief lists the manual steps: “Pulling program and
+provider reports, cross-referencing lists with hazard zones, contacting partners … to confirm shelter, transport,
+staffing, and supply capacity” (p. 3). The briefs do the pulling and cross-referencing in advance; calling shrinks
+to the lines still marked unknown, each with who to ask.</p>
+<ul>
+<li><strong>Baseline (team assumption, to confirm with DHS):</strong> about 3 working days of staff time for one county and hazard.</li>
+<li><strong>Target:</strong> under 1 working day: the brief prints in minutes and the rest is the remaining calls.</li>
+<li><strong>Measured so far:</strong> machine time only (all 16 briefs rebuild in under a second). The baseline and target are not
+yet measured with planners.</li>
+<li><strong>Measurement plan:</strong> a timed tabletop with one county: the same planners, the same scenario, once the current way
+and once with the brief. Report both times and the number of calls each needed.</li>
+</ul>
+<h2 id="6-the-ladder-and-climbing-one-rung">6. The ladder, and climbing one rung</h2>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Name</th>
+<th>What the sector provides</th>
+<th>What an AI agent can do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Phone call</td>
+<td>The information exists; you ask and wait</td>
+<td>Name the owner and the question; draft the request</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Spreadsheet on a schedule</td>
+<td>Published or sent on a known schedule</td>
+<td>Read it, quote it with its dates, warn when it is past due</td>
+</tr>
+<tr>
+<td>2</td>
+<td>File at a stable address</td>
+<td>A program can fetch it and join it by place</td>
+<td>Fetch and combine it with other sources on its own</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Service that answers questions</td>
+<td>A program can ask it by place; about people, it answers with counts only, never records</td>
+<td>Ask it directly during planning or an event</td>
+</tr>
+</tbody>
+</table>
+<p>The showcase includes a <strong>practice demonstration</strong> (labeled “Practice data” everywhere): Maui County keeps one dated
+sheet of its shelter sites. No quantity is invented; a capacity appears only where a public record already lists
+one. Even this one sheet moves the site-list line from “with a limit” to “answered” in all four Maui briefs, and the
+sites-in-zone line in three of them; the eight partner-resource lines stay phone calls until partners post their
+own sheets. That is the migration in miniature.</p>
+<h2 id="7-the-migration">7. The migration</h2>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>What changes</th>
+<th>Needs</th>
+<th>Proposed owner</th>
+<th>Done when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Now</strong></td>
+<td>Briefs, maps and labels from public data</td>
+<td>Nothing new</td>
+<td>State ESF-6 (HI-EMA and DHS) keep briefs and labels</td>
+<td>All 16 briefs print; 100% of tracts mapped; answered share published</td>
+</tr>
+<tr>
+<td><strong>Next season</strong></td>
+<td>Each county posts one dated shelter sheet a season; Red Cross, Salvation Army and VOAD post pledge sheets</td>
+<td>Cooperation</td>
+<td>County emergency management; named partners</td>
+<td>Sheets carry a last-confirmed date within the season; site-capacity lines answered</td>
+</tr>
+<tr>
+<td><strong>Later</strong></td>
+<td>Shared words at a stable address; partners with client records answer with counts per area</td>
+<td>An agreement</td>
+<td>HI-EMA and DHS own the shared words (e.g. as an attachment to the SESF #6 Annex)</td>
+<td>At least one people-level partner answers with counts under a written agreement</td>
+</tr>
+<tr>
+<td><strong>Policy decision</strong></td>
+<td>Whether residents may volunteer their own functional needs</td>
+<td>A DHS or legislative decision</td>
+<td>DHS</td>
+<td>DHS records a decision either way. Nothing is designed here.</td>
+</tr>
+</tbody>
+</table>
+<p>Each stage is worth doing even if the next never comes. All owners are proposals.</p>
+<h2 id="8-privacy-guardrails-and-how-ai-was-used">8. Privacy, guardrails and how AI was used</h2>
+<p><strong>Guardrails.</strong> No record about any person, no registry, no tracking (brief p. 6). Counts per area only, with small
+counts hidden by their owner. County plans and alerting stay in charge; nothing here is deployed into DHS systems.
+Listed is not open: a site is never called open, safe or available unless a current official source says so.</p>
+<p><strong>How AI was used.</strong> AI agents built the data pipeline and the pages from a written design contract; researched
+sources, saving each page with its address, fetch time and checksum; ran a second, independent agent over each
+research note to re-open every citation and correct what did not match; and drafted the labels, messages and plan
+text. AI produced no number by itself: every count, share, estimate and back-test row comes from plain code that
+anyone can re-run, and the model was not tuned to past events.</p>
+<p><strong>What a person still has to review</strong> (not yet done): every role, decision point and trigger, by the county and State
+ESF-6; message drafts and translations, by native speakers and trusted messengers; the factors marked team
+assumption; the shelter site lists and their zone flags. A second, independent AI review
+of the model, factors, labels and plan text (2026-11-15) re-derived the headline numbers from the inputs and
+re-checked every published factor quote against its saved source; it found no error in a headline number, and the
+wording, citation and back-test-summary errors it did find are fixed. A person still has to review the items above.</p>
+<h2 id="9-limits">9. Limits</h2>
+<ul>
+<li>Tract AFN counts in a zone assume AFN residents are spread like everyone else in the tract.</li>
+<li>The wildfire rule (within 500 m of high hazard land) is broad on Oʻahu (484,000 people); the narrower mapped-hazard
+rule is shown beside it in each brief. Counties should choose.</li>
+<li>Hurricane totals assume the whole island is affected: an upper planning bound, with the largest single community
+also reported.</li>
+<li>Detailed languages for Maui and Kauaʻi are published only for the two counties combined.</li>
+<li>emPOWER counts only Medicare beneficiaries; counts from 1 to 10 are hidden by HHS.</li>
+<li>No official source gives a current capacity for any county’s sites; FEMA records list capacities without dates.</li>
+</ul>
+<h2 id="10-questions-for-dhs">10. Questions for DHS</h2>
+<ol>
+<li>How long does it take today to put together a needs-and-resources plan for one county and one hazard, and would
+one county join a timed tabletop to measure it before and after?</li>
+<li>Would each county share one shelter sheet per season (site type, planned capacity, access, power, pets, last
+confirmed), published or shared with ESF-6 partners only?</li>
+<li>Who should own the shared words: HI-EMA and DHS as an attachment to the SESF #6 Annex, the Chief Data Officer as
+a State data standard, or both?</li>
+<li>For goal 2, is “the published shelter count falls inside the model’s range” an acceptable margin, and which past
+events should count?</li>
+<li>Which partners who hold people-level records would share counts per area, and under what agreement?</li>
+</ol>
+<h2 id="11-repository">11. Repository</h2>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>What</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>docs/</code></td>
+<td>The built site: showcase (<code>index.html</code>), slides, this plan, <code>catalog.json</code> (every label)</td>
+</tr>
+<tr>
+<td><code>data/labels/</code></td>
+<td>One label per source</td>
+</tr>
+<tr>
+<td><code>data/research/</code></td>
+<td>Research notes with sources, quotes and fact-check passes</td>
+</tr>
+<tr>
+<td><code>data/factors.csv</code>, <code>data/events.csv</code></td>
+<td>Planning factors and past events, each with source and quote</td>
+</tr>
+<tr>
+<td><code>src/esf6/</code></td>
+<td>Map, model, match and render code</td>
+</tr>
+<tr>
+<td><code>templates/</code>, <code>static/</code></td>
+<td>Pages and slides</td>
+</tr>
+</tbody>
+</table>
+<p>Rebuild: <code>uv run build.py</code>. Tests: <code>uv run python -m unittest discover tests</code>.</p>
+</article><aside class="hidden lg:block no-print"><nav aria-label="Plan contents" class="sticky top-8 text-sm"><p class="font-semibold uppercase tracking-[0.12em] text-xs text-ink-soft">Contents</p><ul class="mt-3 space-y-2"><li><a href="#1-in-one-page" class="no-underline text-ink-soft hover:text-brand">1. In one page</a></li><li><a href="#2-the-root-issue-with-evidence" class="no-underline text-ink-soft hover:text-brand">2. The root issue, with evidence</a></li><li><a href="#3-three-roads-and-why-we-chose-the-third" class="no-underline text-ink-soft hover:text-brand">3. Three roads, and why we chose the third</a></li><li><a href="#4-what-the-plan-does-today-map-model-match" class="no-underline text-ink-soft hover:text-brand">4. What the plan does today: Map, Model, Match</a></li><li><a href="#5-dhss-three-measurable-goals" class="no-underline text-ink-soft hover:text-brand">5. DHS’s three measurable goals</a></li><li><a href="#6-the-ladder-and-climbing-one-rung" class="no-underline text-ink-soft hover:text-brand">6. The ladder, and climbing one rung</a></li><li><a href="#7-the-migration" class="no-underline text-ink-soft hover:text-brand">7. The migration</a></li><li><a href="#8-privacy-guardrails-and-how-ai-was-used" class="no-underline text-ink-soft hover:text-brand">8. Privacy, guardrails and how AI was used</a></li><li><a href="#9-limits" class="no-underline text-ink-soft hover:text-brand">9. Limits</a></li><li><a href="#10-questions-for-dhs" class="no-underline text-ink-soft hover:text-brand">10. Questions for DHS</a></li><li><a href="#11-repository" class="no-underline text-ink-soft hover:text-brand">11. Repository</a></li></ul></nav></aside></div></main><footer class="border-t border-line mt-16"><div class="mx-auto max-w-7xl px-4 sm:px-8 py-8 text-sm text-ink-soft flex flex-col sm:flex-row sm:justify-between gap-3"><p class="font-medium text-ink">Planning aid. Supports, does not replace, county emergency plans.</p><p>Space Cat · HAIC 2026 · DHS: Enhancing ESF-6 Planning Through AI-Supported Insights</p></div></footer></body></html>

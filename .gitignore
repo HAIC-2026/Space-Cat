@@ -1,0 +1,14 @@
+# Publish only what GitHub Pages needs: the built site in docs/ and the README.
+# Everything else (source, raw data, CSVs, notes, reference PDFs, caches) stays local.
+# To publish another file, add a "!path" line below.
+
+/*
+!/.gitignore
+!/README.md
+!/LICENSE
+!/docs/
+
+# Never publish data tables, even if one ends up in docs/
+*.csv
+*.geojson
+.DS_Store
