@@ -404,8 +404,12 @@
         h("header", { class: "rung-head", style: `border-top-color:${LEVEL_COLOR[i]}` },
           h("p", { class: "flex items-baseline gap-3" }, h("span", { class: "chip-lvl big", style: `background:${LEVEL_COLOR[i]};color:${LEVEL_TEXT[i]}` }, String(i)), h("span", { class: "font-serif text-xl font-semibold text-brand" }, lv.name)),
           h("p", { class: "mt-2 text-sm leading-snug" }, lv.definition),
-          h("p", { class: "mt-2 text-xs text-ink-soft leading-snug" }, h("strong", {}, "An AI agent can: "), lv.agent_can),
-          h("p", { class: "mt-3 text-sm font-semibold" }, `${items.length} sources`)),
+          h("p", { class: "mt-2 text-xs text-ink-soft leading-snug" }, h("strong", {}, "An AI agent planner can: "), lv.agent_can),
+          h("p", { class: "mt-3 text-sm font-semibold" }, (() => {
+            // Same count as the ladder cards on /choice/ (stats.labels_per_level): practice data is listed but not counted.
+            const real = items.filter((l) => !l.practice).length, practice = items.length - real;
+            return `${real} ${real === 1 ? "source" : "sources"}` + (practice ? ` + ${practice} practice` : "");
+          })())),
         h("ul", { class: "rung-list" }, items.map((l) => h("li", {}, h("button", { type: "button", onclick: () => openLabel(l.id) },
           h("span", { class: "block font-medium leading-snug" }, l.title, l.practice ? h("span", { class: "tag-practice" }, "Practice data") : null),
           h("span", { class: "block text-xs text-ink-soft" }, `${l.owner || ""}${l.as_of && l.as_of !== "unknown" ? " · " + l.as_of : ""}`))))));
